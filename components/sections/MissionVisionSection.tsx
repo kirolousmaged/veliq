@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const INDIGO = "rgb(99,102,241)";
@@ -27,7 +27,7 @@ function VisionIcon() {
 interface CardProps {
   numeral: string;
   label: string;
-  Icon: () => JSX.Element;
+  Icon: () => React.ReactElement;
   title: string;
   body: string;
   tags: string[];
