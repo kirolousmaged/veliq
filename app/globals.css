@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Mattter® Design System ──────────────────────────────────────────────── */
+@theme {
+  /* Brand Colors */
+  --color-brand-black:      rgb(0, 0, 0);
+  --color-brand-dark-grey:  rgb(20, 20, 20);    /* #141414 */
+  --color-brand-green:      rgb(15, 128, 84);   /* #0f8054 */
+  --color-brand-yellow:     rgb(251, 188, 0);   /* #fbbc00 */
+  --color-brand-white:      rgb(255, 255, 255);
+  --color-brand-light-gray: rgb(201, 201, 201); /* #c9c9c9 */
+
+  /* Border Radius */
+  --radius-section: 12px;
+  --radius-card:    15px;
+  --radius-pill:    30px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Base ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  font-family: var(--font-inter), 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
+
+/* ─── Typography — exact Framer breakpoint values ─────────────────────────── */
+
+/* Main heading: 60px mobile → 99px tablet → 144px desktop */
+.heading-1 {
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 1.1em;
+  letter-spacing: -0.06em;
+}
+@media (min-width: 810px) {
+  .heading-1 { font-size: 99px; }
+}
+@media (min-width: 1200px) {
+  .heading-1 { font-size: 144px; }
+}
+
+/* Secondary heading */
+.heading-2 {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1em;
+  letter-spacing: 0em;
+  text-align: center;
+}
+@media (min-width: 810px) {
+  .heading-2 { font-size: 48px; }
+}
+
+/* Paragraph styles — from Framer typography presets */
+.para-32 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.2em;
+  letter-spacing: -0.9px;
+}
+@media (min-width: 810px) {
+  .para-32 { font-size: 26px; }
+}
+@media (min-width: 1200px) {
+  .para-32 { font-size: 32px; }
+}
+
+.para-26 {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2em;
+  letter-spacing: -0.02em;
+}
+
+.para-23 {
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.2em;
+  letter-spacing: -0.02em;
+}
+
+.para-22 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2em;
+  letter-spacing: -0.04em;
+}
+
+.para-18 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2em;
+  letter-spacing: -0.02em;
+}
+
+.para-16 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2em;
+  letter-spacing: -0.04px;
+}
+
+.para-14 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.1em;
+  letter-spacing: -0.2px;
+}
+
+.para-12 {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1em;
+  letter-spacing: -0.5px;
+}
+
+/* ─── Shared section padding — exact Framer value ────────────────────────── */
+.section-padding {
+  padding: 100px 24px;
+}
+
+/* ─── Marquee animation ───────────────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* ─── Custom cursor — hide native cursor only on precise-pointer devices ──── */
+@media (pointer: fine) {
+  html, body, a, button, [role="button"], label, input, textarea, select {
+    cursor: none;
+  }
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: rgb(20,20,20); border-radius: 3px; }

@@ -1,0 +1,170 @@
+import { notFound } from "next/navigation";
+import Footer from "@/components/sections/Footer";
+import Button from "@/components/ui/Button";
+import ProjectCard from "@/components/ui/ProjectCard";
+import { PROJECTS, getProject, getOtherProjects } from "@/lib/projects";
+
+export function generateStaticParams() {
+  return PROJECTS.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) return {};
+  return {
+    title: `${project.title} — Mattter®`,
+    description: project.description,
+  };
+}
+
+// Dark-grey meta pill (Service / Client / Year) used in the intro.
+function MetaPill({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex flex-col items-center gap-2.5">
+      <span style={{ fontSize: "12px", fontWeight: 400, color: "rgb(201,201,201)", letterSpacing: "-0.5px" }}>
+        {label}
+      </span>
+      <span
+        className="text-white"
+        style={{
+          backgroundColor: "rgb(20,20,20)",
+          borderRadius: "30px",
+          padding: "8px 14px",
+          fontSize: "14px",
+          fontWeight: 600,
+          letterSpacing: "-0.2px",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
+
+// Yellow "Problem" / "Solution" highlighter tag (sticky on the left).
+function HighlighterTag({ label }: { label: string }) {
+  return (
+    <span
+      className="shrink-0"
+      style={{
+        backgroundColor: "rgb(251,188,0)",
+        color: "rgb(0,0,0)",
+        borderRadius: "100px",
+        padding: "7px 18px",
+        fontSize: "14px",
+        fontWeight: 600,
+        letterSpacing: "-0.2px",
+      }}
+    >
+      {label}
+    </span>
+  );
+}
+
+function ContentBlock({
+  label,
+  heading,
+  body,
+}: {
+  label: string;
+  heading: string;
+  body: string;
+}) {
+  return (
+    <div className="w-full max-w-[1200px] mx-auto flex flex-col md:flex-row md:justify-between items-start gap-10 md:gap-[120px] py-[60px]">
+      <HighlighterTag label={label} />
+      <div className="w-full md:w-[72%] flex flex-col gap-7">
+        <h2 className="text-white" style={{ fontSize: "clamp(24px, 3vw, 32px)", fontWeight: 500, lineHeight: 1.25, letterSpacing: "-0.02em" }}>
+          {heading}
+        </h2>
+        <p style={{ fontSize: "18px", fontWeight: 400, lineHeight: 1.6, color: "rgb(201,201,201)" }}>
+          {body}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) notFound();
+
+  const others = getOtherProjects(slug, 4);
+
+  return (
+    <main className="bg-black min-h-screen flex flex-col items-center" style={{ padding: "100px 24px 0" }}>
+
+      {/* ── Intro ── */}
+      <section className="w-full flex flex-col items-center gap-[50px]" style={{ paddingTop: "100px" }}>
+        <div className="w-full max-w-[600px] flex flex-col items-center text-center gap-4">
+          <h1 className="heading-1 text-white">{project.title}</h1>
+          <p className="para-26 text-white" style={{ textAlign: "center" }}>{project.description}</p>
+
+          {/* Meta pills */}
+          <div className="flex items-end justify-center gap-5 mt-2 flex-wrap">
+            <MetaPill label="Service" value={project.category} />
+            <MetaPill label="Client" value={project.client} />
+            <MetaPill label="Year" value={project.year} />
+          </div>
+        </div>
+
+        {/* Hero preview image — 700px tall, aspect 1.646, radius 25px */}
+        <div className="w-full max-w-[1200px]" style={{ aspectRatio: "1.646", maxHeight: "700px" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.preview}
+            alt={project.title}
+            className="w-full h-full object-cover"
+            style={{ borderRadius: "25px" }}
+          />
+        </div>
+      </section>
+
+      {/* ── Problem ── */}
+      <ContentBlock label="Problem" heading={project.problemHeading} body={project.problemBody} />
+
+      {/* ── Two images side by side ── */}
+      <div className="w-full max-w-[1200px] flex flex-col md:flex-row gap-1">
+        {[project.image1, project.image2].map((src, i) => (
+          <div key={i} className="flex-1" style={{ aspectRatio: "1.246" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={src} alt="" className="w-full h-full object-cover" style={{ borderRadius: "25px" }} />
+          </div>
+        ))}
+      </div>
+
+      {/* ── Solution ── */}
+      <ContentBlock label="Solution" heading={project.solutionHeading} body={project.solutionBody} />
+
+      {/* ── Gallery ── */}
+      <section className="w-full max-w-[1520px] flex flex-col gap-[10px]">
+        {project.gallery.map((src, i) => (
+          <div key={i} className="w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={src} alt="" className="w-full h-auto object-cover" style={{ borderRadius: "25px" }} />
+          </div>
+        ))}
+      </section>
+
+      {/* ── Next project ── */}
+      <section className="w-full max-w-[1200px] flex flex-col gap-20" style={{ padding: "100px 0" }}>
+        <div className="flex justify-between items-end gap-6">
+          <h2 className="heading-1 text-white">Next project.</h2>
+          <Button label="All projects" href="/projects" variant="primary" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[10px] gap-y-10">
+          {others.map((p) => (
+            <ProjectCard key={p.slug} project={p} />
+          ))}
+        </div>
+      </section>
+
+      <div className="w-full" style={{ marginInline: "-24px", width: "calc(100% + 48px)" }}>
+        <Footer />
+      </div>
+    </main>
+  );
+}
