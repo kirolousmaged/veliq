@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/sections/Navbar";
 import CustomCursor from "@/components/ui/CustomCursor";
 import GlobalBackground from "@/components/ui/GlobalBackground";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
         <CustomCursor />
         <Navbar />
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );
