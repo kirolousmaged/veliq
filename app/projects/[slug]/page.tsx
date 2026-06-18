@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/sections/Footer";
 import Button from "@/components/ui/Button";
 import ProjectCard from "@/components/ui/ProjectCard";
+import DeviceMockups from "@/components/ui/DeviceMockups";
 import { PROJECTS, getProject, getOtherProjects } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -49,7 +50,7 @@ function HighlighterTag({ label }: { label: string }) {
     <span
       className="shrink-0"
       style={{
-        backgroundColor: "rgb(251,188,0)",
+        backgroundColor: "rgb(99,102,241)",
         color: "rgb(0,0,0)",
         borderRadius: "100px",
         padding: "7px 18px",
@@ -95,10 +96,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const others = getOtherProjects(slug, 4);
 
   return (
-    <main className="bg-black min-h-screen flex flex-col items-center" style={{ padding: "100px 24px 0" }}>
+    <main className="bg-black min-h-screen flex flex-col items-center" style={{ padding: "0 24px 0" }}>
 
       {/* ── Intro ── */}
-      <section className="w-full flex flex-col items-center gap-[50px]" style={{ paddingTop: "100px" }}>
+      <section className="w-full flex flex-col items-center gap-10" style={{ paddingTop: "94px" }}>
         <div className="w-full max-w-[600px] flex flex-col items-center text-center gap-4">
           <h1 className="heading-1 text-white">{project.title}</h1>
           <p className="para-26 text-white" style={{ textAlign: "center" }}>{project.description}</p>
@@ -111,15 +112,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
-        {/* Hero preview image — 700px tall, aspect 1.646, radius 25px */}
-        <div className="w-full max-w-[1200px]" style={{ aspectRatio: "1.646", maxHeight: "700px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={project.preview}
-            alt={project.title}
-            className="w-full h-full object-cover"
-            style={{ borderRadius: "25px" }}
-          />
+        {/* ── Device mockups ── */}
+        <div className="w-full max-w-[1200px]">
+          <DeviceMockups url={project.url} title={project.title} />
         </div>
       </section>
 

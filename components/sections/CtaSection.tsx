@@ -6,10 +6,11 @@ import Button from "@/components/ui/Button";
 
 const TYPEWRITER_WORDS = [
   "a new website?",
-  "better branding?",
-  "higher conversions?",
-  "a stronger identity?",
-  "technical SEO?",
+  "mobile app development?",
+  "better SEO rankings?",
+  "a stronger brand identity?",
+  "data & analytics?",
+  "digital marketing?",
 ];
 
 function TypewriterText() {
@@ -59,7 +60,6 @@ export default function CtaSection() {
     <section ref={ref} className="w-full bg-black rounded-[12px] overflow-hidden">
       <div className="w-full min-h-screen flex flex-col items-center justify-center px-6 py-24 gap-16">
 
-        {/* Big heading */}
         <div className="flex flex-col items-center gap-5 text-center">
           <motion.p
             className="text-[rgb(201,201,201)] uppercase tracking-[0.18em]"
@@ -87,17 +87,15 @@ export default function CtaSection() {
           </motion.h2>
         </div>
 
-        {/* Green pill */}
+        {/* Indigo pill */}
         <motion.div
-          className="flex items-center justify-between gap-4 rounded-full bg-[rgb(15,128,84)] pl-7 pr-2 py-2 w-full max-w-[600px]"
+          className="flex items-center justify-between gap-4 rounded-full pl-7 pr-2 py-2 w-full max-w-[600px]"
+          style={{ backgroundColor: "rgb(99,102,241)" }}
           initial={{ opacity: 0, scale: 0.92, y: 20 }}
           animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         >
-          <div
-            className="flex-1 overflow-hidden"
-            style={{ fontSize: "1rem", fontWeight: 500 }}
-          >
+          <div className="flex-1 overflow-hidden" style={{ fontSize: "1rem", fontWeight: 500 }}>
             <span className="text-white/70">Need </span>
             <TypewriterText />
           </div>
@@ -110,7 +108,6 @@ export default function CtaSection() {
           />
         </motion.div>
 
-        {/* Subtext */}
         <motion.p
           className="text-[rgb(201,201,201)] text-center"
           style={{ fontSize: "0.875rem", fontWeight: 400, maxWidth: "36ch" }}

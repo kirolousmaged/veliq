@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/sections/Navbar";
 import CustomCursor from "@/components/ui/CustomCursor";
+import GlobalBackground from "@/components/ui/GlobalBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,14 +13,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Mattter® — Digital Design & Automation Agency",
+  title: "VELIQ — Software & Marketing Solutions",
   description:
-    "A digital design practice crafting brands with substance. We merge interactive physics with strategic identity to build websites that feel real.",
-  keywords: ["design agency", "web design", "framer", "branding", "UI/UX", "SEO"],
+    "VELIQ is your dedicated backbone team. We deliver web development, mobile apps, SEO, digital marketing, data analytics, and brand strategy across Egypt, Saudi Arabia, UAE, and the US.",
+  keywords: ["web development", "digital marketing", "SEO", "mobile apps", "brand strategy", "data analytics", "software agency", "Egypt", "Saudi Arabia"],
   openGraph: {
-    title: "Mattter® — Digital Design & Automation Agency",
+    title: "VELIQ — Software & Marketing Solutions",
     description:
-      "A digital design practice crafting brands with substance.",
+      "Your dedicated backbone team. Every channel. One direction.",
     type: "website",
   },
 };
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
       <body className="bg-black text-white min-h-full antialiased overflow-x-hidden">
+        <GlobalBackground />
         <CustomCursor />
         <Navbar />
         {children}

@@ -6,26 +6,26 @@ import { motion, useInView } from "framer-motion";
 const STATS = [
   {
     label: "Client Satisfaction",
-    value: 85,
+    value: 100,
     suffix: "%",
-    detail: "★  Shipped on time",
+    detail: "★  Across 30+ happy clients",
   },
   {
-    label: "Delivered Projects",
-    value: 87,
+    label: "Projects Delivered",
+    value: 45,
     suffix: "+",
-    detail: "Across 14 industries",
+    detail: "Web, mobile, SEO & marketing",
   },
   {
-    label: "Years Active",
-    value: 7,
-    suffix: "+",
-    detail: "Since 2018",
+    label: "Countries Served",
+    value: 4,
+    suffix: "",
+    detail: "Egypt · Saudi Arabia · UAE · US",
   },
   {
-    label: "Average ROI",
-    value: 3,
-    suffix: "x",
+    label: "Average ROAS",
+    value: 4,
+    suffix: ".8x",
     detail: "On ad-spend optimization",
   },
 ];
@@ -72,25 +72,6 @@ export default function StatsSection() {
     <section ref={ref} className="w-full bg-black section-padding">
       <div className="w-full max-w-[1200px] mx-auto flex flex-col gap-16">
 
-        {/* Quote */}
-        <motion.p
-          className="text-white text-center mx-auto"
-          style={{
-            fontSize: "clamp(18px, 2.5vw, 28px)",
-            fontWeight: 500,
-            lineHeight: 1.4,
-            letterSpacing: "-0.03em",
-            maxWidth: "820px",
-          }}
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-        >
-          Good design pays dividends. We combine creative strategy with technical
-          precision to deliver results that you can actually measure, turning
-          visitors into loyal customers.
-        </motion.p>
-
         {/* Stat cards — 2×2 grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
           {STATS.map((stat, i) => (
@@ -106,10 +87,7 @@ export default function StatsSection() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
             >
-              <span
-                className="text-[rgb(201,201,201)]"
-                style={{ fontSize: "13px", fontWeight: 600 }}
-              >
+              <span className="text-[rgb(201,201,201)]" style={{ fontSize: "13px", fontWeight: 600 }}>
                 {stat.label}
               </span>
 
@@ -127,10 +105,7 @@ export default function StatsSection() {
 
               <div className="w-full h-px bg-[rgb(28,28,28)]" />
 
-              <span
-                className="text-[rgb(201,201,201)]"
-                style={{ fontSize: "13px", fontWeight: 400 }}
-              >
+              <span className="text-[rgb(201,201,201)]" style={{ fontSize: "13px", fontWeight: 400 }}>
                 {stat.detail}
               </span>
             </motion.div>

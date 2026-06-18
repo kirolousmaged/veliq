@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 const FAQS = [
   {
@@ -35,7 +34,7 @@ function PlusIcon({ open }: { open: boolean }) {
   return (
     <motion.div
       className="shrink-0 flex items-center justify-center rounded-full"
-      style={{ width: "32px", height: "32px", backgroundColor: "rgb(15,128,84)" }}
+      style={{ width: "32px", height: "32px", backgroundColor: "rgb(99,102,241)" }}
       animate={{ rotate: open ? 45 : 0 }}
       transition={{ duration: 0.22 }}
     >
@@ -107,43 +106,18 @@ export default function FaqSection() {
           FAQ.
         </motion.h2>
 
-        <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
-
-          {/* Left: image + tagline */}
-          <div className="md:w-[240px] shrink-0 flex flex-col gap-4">
-            <div className="w-full rounded-[24px] overflow-hidden" style={{ aspectRatio: "0.85" }}>
-              <Image
-                src="https://framerusercontent.com/images/uAfKZHvw2J3sQodOY9ZFB5zDfY.jpg"
-                alt="Transparency"
-                width={240}
-                height={282}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p
-              className="text-white"
-              style={{ fontSize: "13px", fontWeight: 500, lineHeight: 1.6 }}
+        {/* Full-width FAQ list */}
+        <div className="flex flex-col gap-2">
+          {FAQS.map((faq, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
             >
-              We believe in total transparency. If you don&apos;t see what
-              you&apos;re looking for here, book a quick call with our team and
-              let&apos;s clear things up.
-            </p>
-          </div>
-
-          {/* Right: FAQ cards */}
-          <div className="flex-1 flex flex-col gap-2">
-            {FAQS.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-              >
-                <FaqItem q={faq.q} a={faq.a} index={i} />
-              </motion.div>
-            ))}
-          </div>
-
+              <FaqItem q={faq.q} a={faq.a} index={i} />
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

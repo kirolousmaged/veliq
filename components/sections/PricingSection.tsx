@@ -15,7 +15,7 @@ const PLANS = [
     bg: "rgb(14,14,14)",
     mutedColor: "rgba(255,255,255,0.5)",
     dividerColor: "rgba(255,255,255,0.1)",
-    ctaBg: "rgb(15,128,84)",
+    ctaBg: "rgb(99,102,241)",
     dim: false,
     features: [
       "One active request at a time",
@@ -32,7 +32,7 @@ const PLANS = [
     bg: "rgb(14,14,14)",
     mutedColor: "rgba(255,255,255,0.5)",
     dividerColor: "rgba(255,255,255,0.1)",
-    ctaBg: "rgb(15,128,84)",
+    ctaBg: "rgb(99,102,241)",
     dim: false,
     features: [
       "Two active requests at a time",

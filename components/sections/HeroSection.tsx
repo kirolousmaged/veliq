@@ -1,92 +1,74 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function HeroSection() {
   return (
     <section
-      className="relative w-full overflow-hidden"
-      style={{ height: "100vh" }}
+      className="relative w-full overflow-hidden flex items-center justify-center"
+      style={{ height: "100vh", backgroundColor: "rgb(0,0,0)" }}
     >
-      {/* Background — gummy bears 3D scene, full cover, no overlay darkening */}
-      <video
-        src="https://framerusercontent.com/assets/MLWPbW1dUQawJLhhun3dBwpgJak.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ zIndex: 0 }}
-      />
+      {/* Centred content stack */}
+      <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center">
 
-      {/* Content layer */}
-      <div className="absolute inset-0" style={{ zIndex: 10 }}>
-
-        {/* Description + CTA — left side, vertically at ~38% */}
+        {/* Logo */}
         <motion.div
-          className="absolute flex flex-col gap-6"
-          style={{ top: "38%", left: "24px", maxWidth: "340px" }}
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p
+          <Image
+            src="/branding/colored-logo.png"
+            alt="VELIQ"
+            width={160}
+            height={52}
+            priority
+            className="object-contain"
+          />
+        </motion.div>
+
+        {/* Slogan */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            fontSize: "clamp(1rem, 1.8vw, 20px)",
+            fontWeight: 400,
+            color: "rgba(255,255,255,0.6)",
+            lineHeight: 1.65,
+            maxWidth: "44ch",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Your dedicated backbone team.
+        </motion.p>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.97 }}
+        >
+          <Link
+            href="/contact"
+            className="inline-flex items-center rounded-full px-8 py-3.5 text-white"
             style={{
-              fontSize: "17px",
-              fontWeight: 500,
-              color: "white",
-              lineHeight: 1.55,
+              backgroundColor: "rgb(99,102,241)",
+              fontSize: "15px",
+              fontWeight: 600,
               letterSpacing: "-0.01em",
             }}
           >
-            A digital design practice crafting brands with substance. We merge
-            interactive physics with strategic identity to build websites that feel
-            real.
-          </p>
-
-          <motion.div
-            className="self-start"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 420, damping: 22 }}
-          >
-            <Link
-              href="/contact"
-              className="inline-flex items-center rounded-full px-7 py-3.5 text-white"
-              style={{
-                backgroundColor: "rgb(15,128,84)",
-                fontSize: "14px",
-                fontWeight: 600,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Start Your Project
-            </Link>
-          </motion.div>
+            Start Your Project
+          </Link>
         </motion.div>
-
-        {/* MATTTER® ghost wordmark — pinned at bottom, full width, see-through.
-            Reveals by rising up from below the fold (Framer hero signature). */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none">
-          <motion.h1
-            className="w-full select-none"
-            style={{
-              fontSize: "22vw",
-              fontWeight: 900,
-              letterSpacing: "-0.06em",
-              lineHeight: 0.82,
-              color: "rgba(255,255,255,0.22)",
-              paddingLeft: "14px",
-            }}
-            initial={{ y: "30%", opacity: 0 }}
-            animate={{ y: "0%", opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          >
-            MATTTER®
-          </motion.h1>
-        </div>
       </div>
+
     </section>
   );
 }

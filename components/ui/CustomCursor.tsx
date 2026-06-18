@@ -58,8 +58,6 @@ export default function CustomCursor() {
 
   if (!enabled) return null;
 
-  // The template cursor is a small yellow rounded square that grows slightly
-  // over interactive elements. Color = /Yellow (rgb(251,188,0)).
   return (
     <motion.div
       aria-hidden
@@ -69,7 +67,7 @@ export default function CustomCursor() {
         y: sy,
         translateX: "-50%",
         translateY: "-50%",
-        backgroundColor: "rgb(251,188,0)",
+        backgroundColor: "rgb(99,102,241)",
         borderRadius: "4px",
       }}
       animate={{

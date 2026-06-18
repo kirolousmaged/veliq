@@ -4,66 +4,64 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import { PROJECTS } from "@/lib/projects";
 
-// Real project data pulled from the template's CMS (Projects collection).
-const PROJECTS = [
-  { title: "Ethereal", category: "Web design",   year: "2024", slug: "ethereal", img: "https://framerusercontent.com/images/4g3mQfVzCiTON8DoN1D8WGnNa3c.png" },
-  { title: "Pulse",    category: "UI/UX Design",  year: "2025", slug: "pulse",    img: "https://framerusercontent.com/images/1JtVtYwgwzXvmSxwKH7TDNE7FY.png" },
-  { title: "Canvas",   category: "Web design",    year: "2026", slug: "canvas",   img: "https://framerusercontent.com/images/Q26teNCQ5tcfHqhCyHT2yf5dP8.png" },
-  { title: "Nexus",    category: "Development",   year: "2026", slug: "nexus",    img: "https://framerusercontent.com/images/ylSzx9EHuLrS33To9Be1lZxUd3w.png" },
-  { title: "Summit",   category: "SEO",           year: "2025", slug: "summit",   img: "https://framerusercontent.com/images/trWfQOfehjZNffakJfa3LkFoNI.png" },
-  { title: "Vault",    category: "UI/UX Design",  year: "2026", slug: "vault",    img: "https://framerusercontent.com/images/Vt9Ui0gskAyE2bvE7k8mxALgRg.png" },
-  { title: "Velocity", category: "Development",   year: "2025", slug: "velocity", img: "https://framerusercontent.com/images/kcwYwENYU8F6xjobmnhX5BfLFOQ.png" },
-];
-
-// Card geometry — kept in JS so the marquee loop is pixel-perfect / seamless.
-const CARD_WIDTH = 620;
+const CARD_W   = 620;
+const CARD_H   = Math.round(CARD_W * 9 / 16); // 349
 const CARD_GAP = 20;
-const ONE_SET = PROJECTS.length * (CARD_WIDTH + CARD_GAP);
+const ONE_SET  = PROJECTS.length * (CARD_W + CARD_GAP); // 7680
 
-function ProjectCard({ project }: { project: (typeof PROJECTS)[number] }) {
+function BrowserCard({ project }: { project: (typeof PROJECTS)[number] }) {
+  const domain = project.url.replace(/^https?:\/\/(www\.)?/, "");
+
   return (
     <Link
       href={`/projects/${project.slug}`}
       className="flex-shrink-0 flex flex-col gap-3 group"
-      style={{ width: `${CARD_WIDTH}px` }}
+      style={{ width: `${CARD_W}px` }}
     >
-      {/* Image with yellow category pill */}
+      {/* Browser shell */}
       <div
-        className="relative w-full overflow-hidden"
-        style={{ borderRadius: "15px", aspectRatio: "16 / 9", backgroundColor: "rgb(3,3,3)" }}
+        className="overflow-hidden"
+        style={{ borderRadius: 14, border: "1px solid rgb(36,36,36)", backgroundColor: "rgb(16,16,16)" }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={project.img}
-          alt={project.title}
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        {/* Yellow category pill — top right */}
-        <span
-          className="absolute"
-          style={{
-            top: "12px",
-            right: "12px",
-            backgroundColor: "rgb(251,188,0)",
-            color: "rgb(0,0,0)",
-            borderRadius: "100px",
-            padding: "5px 15px",
-            fontSize: "12px",
-            fontWeight: 600,
-            letterSpacing: "-0.2px",
-            zIndex: 2,
-          }}
-        >
-          {project.category}
-        </span>
+        {/* Chrome bar */}
+        <div style={{ height: 34, backgroundColor: "rgb(22,22,22)", borderBottom: "1px solid rgb(36,36,36)", display: "flex", alignItems: "center", gap: 6, padding: "0 14px" }}>
+          <div style={{ display: "flex", gap: 5, flexShrink: 0 }}>
+            <span style={{ width: 9, height: 9, borderRadius: "50%", backgroundColor: "rgb(255,95,87)",  display: "block" }} />
+            <span style={{ width: 9, height: 9, borderRadius: "50%", backgroundColor: "rgb(255,189,46)", display: "block" }} />
+            <span style={{ width: 9, height: 9, borderRadius: "50%", backgroundColor: "rgb(39,201,63)",  display: "block" }} />
+          </div>
+          <div style={{ flex: 1, marginLeft: 8, backgroundColor: "rgb(14,14,14)", borderRadius: 5, height: 20, display: "flex", alignItems: "center", padding: "0 8px", overflow: "hidden" }}>
+            <span style={{ fontSize: 9, color: "rgb(90,90,90)", letterSpacing: "0.01em", whiteSpace: "nowrap" }}>
+              🔒 {domain}
+            </span>
+          </div>
+        </div>
+
+        {/* Screenshot viewport */}
+        <div style={{ position: "relative", width: CARD_W, height: CARD_H, overflow: "hidden", backgroundColor: "rgb(12,12,12)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.preview}
+            alt={project.title}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+          />
+          <span
+            style={{
+              position: "absolute", top: 10, right: 10, zIndex: 2,
+              backgroundColor: "rgb(99,102,241)", color: "rgb(0,0,0)",
+              borderRadius: 100, padding: "4px 12px",
+              fontSize: 11, fontWeight: 600, letterSpacing: "-0.2px",
+            }}
+          >
+            {project.category}
+          </span>
+        </div>
       </div>
 
-      {/* Title below the card */}
-      <span
-        style={{ color: "rgb(201,201,201)", fontSize: "22px", fontWeight: 600, letterSpacing: "-0.04em" }}
-      >
+      <span style={{ color: "rgb(201,201,201)", fontSize: 22, fontWeight: 600, letterSpacing: "-0.04em" }}>
         {project.title}
       </span>
     </Link>
@@ -78,7 +76,6 @@ export default function ProjectsSection() {
     <section ref={ref} className="w-full bg-black section-padding">
       <div className="w-full flex flex-col gap-[120px]">
 
-        {/* Heading row */}
         <motion.div
           className="flex justify-between items-end px-2"
           initial={{ opacity: 0, y: 30 }}
@@ -87,37 +84,52 @@ export default function ProjectsSection() {
         >
           <div className="flex items-start gap-3">
             <h2 className="heading-1 text-white">Projects.</h2>
-            <span className="para-12 text-[rgb(201,201,201)] mt-4">(07)</span>
+            <span className="para-12 text-[rgb(201,201,201)] mt-4">(12)</span>
           </div>
           <Button label="All Projects" href="/projects" variant="outline" />
         </motion.div>
 
-        {/* 3D perspective ticker — full-bleed to the viewport edges */}
+        {/*
+          3-layer architecture:
+            Layer 1 — gradient-mask wrapper: fades cards at edges instead of hard-clipping.
+                       overflow:hidden prevents scrollbars; mask-image softens the edges.
+            Layer 2 — perspective context (separate from overflow so 3D isn't clipped)
+            Layer 3 — static rotateY tilt (plain CSS, no Framer Motion)
+            Layer 4 — CSS @keyframes translateX (compositor thread, never snaps)
+        */}
+
+        {/* Layer 1 — full-bleed + gradient edge fade */}
         <div
-          className="overflow-hidden"
           style={{
-            perspective: "1800px",
-            perspectiveOrigin: "50% 50%",
             width: "100vw",
             marginLeft: "calc(50% - 50vw)",
-            marginRight: "calc(50% - 50vw)",
+            overflow: "hidden",
+            maskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
           }}
         >
-          <motion.div
-            className="flex w-max"
-            style={{
-              gap: `${CARD_GAP}px`,
-              transformStyle: "preserve-3d",
-              rotateY: "-18deg",
-            }}
-            animate={{ x: [0, -ONE_SET] }}
-            transition={{ duration: 45, repeat: Infinity, ease: "linear", repeatType: "loop" }}
-          >
-            {/* Two copies for a seamless loop */}
-            {[...PROJECTS, ...PROJECTS].map((project, i) => (
-              <ProjectCard key={`${project.slug}-${i}`} project={project} />
-            ))}
-          </motion.div>
+          {/* Layer 2 — perspective */}
+          <div style={{ perspective: "1800px", perspectiveOrigin: "50% 50%" }}>
+
+            {/* Layer 3 — static 3D tilt */}
+            <div style={{ transform: "rotateY(-18deg)", transformStyle: "preserve-3d" }}>
+
+              {/* Layer 4 — smooth CSS animation, translateX only */}
+              <div
+                className="veliq-ticker flex w-max"
+                style={{
+                  gap: `${CARD_GAP}px`,
+                  "--ticker-dist": `-${ONE_SET}px`,
+                  "--ticker-dur": "55s",
+                } as React.CSSProperties}
+              >
+                {[...PROJECTS, ...PROJECTS].map((p, i) => (
+                  <BrowserCard key={`${p.slug}-${i}`} project={p} />
+                ))}
+              </div>
+
+            </div>
+          </div>
         </div>
 
       </div>

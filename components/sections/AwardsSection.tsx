@@ -136,7 +136,7 @@ export default function AwardsSection() {
                   <span
                     className="rounded-full px-3 py-1"
                     style={{
-                      backgroundColor: "rgb(15,128,84)",
+                      backgroundColor: "rgb(99,102,241)",
                       color: "white",
                       fontSize: "12px",
                       fontWeight: 700,

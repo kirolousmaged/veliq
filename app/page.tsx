@@ -1,12 +1,11 @@
 import HeroSection from "@/components/sections/HeroSection";
 import HeaderBar from "@/components/ui/HeaderBar";
 import IntroSection from "@/components/sections/IntroSection";
+import MissionVisionSection from "@/components/sections/MissionVisionSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ServicesSection from "@/components/sections/ServicesSection";
-import PricingSection from "@/components/sections/PricingSection";
-import AwardsSection from "@/components/sections/AwardsSection";
 import StatsSection from "@/components/sections/StatsSection";
-import TeamSection from "@/components/sections/TeamSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import BlogSection from "@/components/sections/BlogSection";
 import CtaSection from "@/components/sections/CtaSection";
@@ -22,6 +21,7 @@ export default function Home() {
       <div className="flex flex-col gap-[10px] p-2">
         <HeaderBar label="About Us" />
         <IntroSection />
+        <MissionVisionSection />
 
         <HeaderBar label="Portfolio" />
         <ProjectsSection />
@@ -29,15 +29,9 @@ export default function Home() {
         <HeaderBar label="Services" />
         <ServicesSection />
 
-        <HeaderBar label="Pricing" />
-        <PricingSection />
-
-        <AwardsSection />
-
         <StatsSection />
 
-        <HeaderBar label="Team" />
-        <TeamSection />
+        <TestimonialsSection />
 
         <HeaderBar label="FAQ" />
         <FaqSection />

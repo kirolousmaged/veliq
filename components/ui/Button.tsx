@@ -28,7 +28,7 @@ export default function Button({
     "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold leading-none tracking-[-0.2px] cursor-pointer select-none";
 
   const variants = {
-    primary: "bg-[rgb(15,128,84)] text-white",
+    primary: "bg-[rgb(99,102,241)] text-white",
     outline: "border border-[rgb(201,201,201)] text-white",
     white: "bg-white text-black",
   };

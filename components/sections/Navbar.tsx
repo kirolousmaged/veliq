@@ -2,25 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
-  { label: "Studio",   href: "/studio"   },
-  { label: "Projects", href: "/projects", count: "07" },
+  { label: "About",    href: "/about"    },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects", count: "12" },
   { label: "Blog",     href: "/blog"     },
+  { label: "Pricing",  href: "/pricing"  },
 ];
-
-function GridIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-      <rect x="0" y="0" width="5" height="5" rx="1.2" fill="currentColor" />
-      <rect x="7" y="0" width="5" height="5" rx="1.2" fill="currentColor" />
-      <rect x="0" y="7" width="5" height="5" rx="1.2" fill="currentColor" />
-      <rect x="7" y="7" width="5" height="5" rx="1.2" fill="currentColor" />
-    </svg>
-  );
-}
 
 function DotsIcon() {
   return (
@@ -43,11 +35,11 @@ export default function Navbar() {
     const onScroll = () => {
       const y = window.scrollY;
       if (y < 40) {
-        setCompact(false);          // near the top → always expanded
+        setCompact(false);
       } else if (y > lastY + 4) {
-        setCompact(true);           // scrolling down → collapse
+        setCompact(true);
       } else if (y < lastY - 4) {
-        setCompact(false);          // scrolling up → re-expand
+        setCompact(false);
       }
       lastY = y;
     };
@@ -57,12 +49,10 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  // Hovering the pill always reveals the full nav, even while collapsed.
   const expanded = !compact || hovered;
 
   return (
     <>
-      {/* Floating pill — centered, fixed */}
       <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
         <motion.nav
           className="pointer-events-auto flex items-center rounded-full"
@@ -81,17 +71,23 @@ export default function Navbar() {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          {/* Logo — always visible */}
+          {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 text-white rounded-full hover:bg-white/10 transition-colors"
-            style={{ fontWeight: 700, fontSize: "13px", letterSpacing: "-0.02em", padding: "7px 14px" }}
+            className="flex items-center rounded-full hover:bg-white/10 transition-colors"
+            style={{ padding: "5px 12px" }}
           >
-            <GridIcon />
-            MATTTER®
+            <Image
+              src="/branding/colored-logo.png"
+              alt="VELIQ"
+              width={72}
+              height={24}
+              className="object-contain"
+              style={{ height: "22px", width: "auto" }}
+            />
           </Link>
 
-          {/* ── Expanded state: links + divider + contact ── */}
+          {/* Expanded: links + contact */}
           <AnimatePresence mode="wait" initial={false}>
             {expanded ? (
               <motion.div
@@ -103,7 +99,6 @@ export default function Navbar() {
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 style={{ overflow: "hidden" }}
               >
-                {/* Divider */}
                 <div className="w-px h-4 mx-1" style={{ backgroundColor: "rgba(255,255,255,0.12)" }} />
 
                 {NAV_LINKS.map((link) => (
@@ -119,22 +114,20 @@ export default function Navbar() {
                   >
                     {link.label}
                     {link.count && (
-                      <sup className="text-[rgb(15,128,84)]" style={{ fontSize: "9px", fontWeight: 700 }}>
+                      <sup className="text-[rgb(99,102,241)]" style={{ fontSize: "9px", fontWeight: 700 }}>
                         {link.count}
                       </sup>
                     )}
                   </Link>
                 ))}
 
-                {/* Divider */}
                 <div className="w-px h-4 mx-1" style={{ backgroundColor: "rgba(255,255,255,0.12)" }} />
 
-                {/* Contact */}
                 <Link
                   href="/contact"
                   className="flex items-center rounded-full text-white hover:brightness-110 transition-all whitespace-nowrap"
                   style={{
-                    backgroundColor: "rgb(15,128,84)",
+                    backgroundColor: "rgb(99,102,241)",
                     fontSize: "13px",
                     fontWeight: 600,
                     padding: "7px 18px",
@@ -144,7 +137,6 @@ export default function Navbar() {
                 </Link>
               </motion.div>
             ) : (
-              /* ── Compact state: dots indicator ── */
               <motion.div
                 key="compact"
                 className="hidden md:flex items-center"
@@ -216,7 +208,7 @@ export default function Navbar() {
                   >
                     {link.label}
                     {link.count && (
-                      <span className="text-[rgb(15,128,84)]" style={{ fontSize: "11px", fontWeight: 700 }}>
+                      <span className="text-[rgb(99,102,241)]" style={{ fontSize: "11px", fontWeight: 700 }}>
                         ({link.count})
                       </span>
                     )}
@@ -227,9 +219,9 @@ export default function Navbar() {
                 <Link
                   href="/contact"
                   className="flex items-center justify-center rounded-full text-white font-semibold w-full"
-                  style={{ backgroundColor: "rgb(15,128,84)", fontSize: "14px", padding: "12px 0" }}
+                  style={{ backgroundColor: "rgb(99,102,241)", fontSize: "14px", padding: "12px 0" }}
                 >
-                  Contact
+                  Contact Us
                 </Link>
               </li>
             </ul>
