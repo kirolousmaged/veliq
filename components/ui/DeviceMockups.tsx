@@ -11,29 +11,63 @@ function PhoneMockup({ url }: { url: string }) {
   const VB_W = 312, VB_H = 662;
   // Body: x6 y6 w300 h650 r52 · Screen hole: x17 y17 w278 h628 r42
   const SCR_X = 17, SCR_Y = 17, SCR_W = 278, SCR_H = 628, SCR_R = 42;
+  const STATUS_H = 46;          // status bar / notch safe area
+  const SITE_H = SCR_H - STATUS_H;
   const VIEWPORT = 430;
   const scale = SCR_W / VIEWPORT;
 
   return (
     <div style={{ position: "relative", width: VB_W, height: VB_H, flexShrink: 0, filter: "drop-shadow(0 40px 90px rgba(0,0,0,0.85))" }}>
 
-      {/* Live site behind the frame */}
+      {/* Screen: status bar (under notch) + live site */}
       <div style={{
         position: "absolute",
         left: SCR_X, top: SCR_Y, width: SCR_W, height: SCR_H,
-        borderRadius: SCR_R, overflow: "hidden", background: "#000",
+        borderRadius: SCR_R, overflow: "hidden", background: "#0a0a0a",
       }}>
-        <iframe
-          src={url}
-          title="Mobile preview"
-          style={{
-            width: VIEWPORT,
-            height: Math.round(SCR_H / scale),
-            transform: `scale(${scale})`,
-            transformOrigin: "0 0",
-            border: "none", display: "block", pointerEvents: "none",
-          }}
-        />
+        {/* Status bar */}
+        <div style={{
+          height: STATUS_H, display: "flex", alignItems: "center",
+          justifyContent: "space-between", padding: "0 26px 6px", color: "#fff",
+        }}>
+          <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.2px", marginTop: 6 }}>9:41</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 6 }}>
+            {/* Cellular */}
+            <svg width="17" height="11" viewBox="0 0 17 11" fill="#fff" aria-hidden>
+              <rect x="0" y="7" width="3" height="4" rx="1" />
+              <rect x="4.5" y="5" width="3" height="6" rx="1" />
+              <rect x="9" y="2.5" width="3" height="8.5" rx="1" />
+              <rect x="13.5" y="0" width="3" height="11" rx="1" />
+            </svg>
+            {/* Wi-Fi */}
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="#fff" aria-hidden>
+              <path d="M8 2C5 2 2.4 3.2 0.6 5.1L2 6.5C3.5 5 5.6 4 8 4s4.5 1 6 2.5l1.4-1.4C13.6 3.2 11 2 8 2z" />
+              <path d="M8 6c-1.6 0-3 0.6-4 1.7l1.4 1.4C6 8.4 6.9 8 8 8s2 0.4 2.6 1.1L12 7.7C11 6.6 9.6 6 8 6z" />
+              <circle cx="8" cy="10.4" r="1.3" />
+            </svg>
+            {/* Battery */}
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden>
+              <rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#fff" strokeOpacity="0.5" />
+              <rect x="2" y="2" width="16" height="8" rx="1.5" fill="#fff" />
+              <rect x="23" y="3.5" width="1.6" height="5" rx="0.8" fill="#fff" fillOpacity="0.5" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Live site — starts below the notch */}
+        <div style={{ width: SCR_W, height: SITE_H, overflow: "hidden" }}>
+          <iframe
+            src={url}
+            title="Mobile preview"
+            style={{
+              width: VIEWPORT,
+              height: Math.round(SITE_H / scale),
+              transform: `scale(${scale})`,
+              transformOrigin: "0 0",
+              border: "none", display: "block", pointerEvents: "none",
+            }}
+          />
+        </div>
       </div>
 
       {/* SVG frame on top — transparent screen hole */}
@@ -183,12 +217,14 @@ export default function DeviceMockups({ url, title }: { url: string; title: stri
         <span style={{ width: 28, height: 1, background: "rgb(99,102,241)" }} />
       </div>
 
-      {/* Devices */}
+      {/* Devices — laptop hidden on mobile, phone only */}
       <div style={{
         display: "flex", alignItems: "flex-end", justifyContent: "center",
         gap: 28, width: "100%", overflowX: "auto", paddingBottom: 12,
       }}>
-        <LaptopMockup url={url} />
+        <div className="hidden md:block" style={{ flexShrink: 0 }}>
+          <LaptopMockup url={url} />
+        </div>
         <PhoneMockup url={url} />
       </div>
 

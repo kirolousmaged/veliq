@@ -124,8 +124,48 @@ export default function ServicesSection() {
   ];
 
   return (
-    /* Reduced scroll travel (260 vh) so the section doesn't feel endless */
-    <section ref={sectionRef} className="relative w-full" style={{ height: "260vh" }}>
+    <>
+    {/* ─── Mobile: simple vertical stack (md:hidden) ─── */}
+    <section className="md:hidden relative w-full" style={{ padding: "24px 16px" }}>
+      <div
+        className="overflow-hidden flex flex-col items-center"
+        style={{ backgroundColor: "rgb(99,102,241)", borderRadius: "26px", padding: "40px 20px" }}
+      >
+        <h2
+          className="text-white text-center select-none"
+          style={{ fontSize: "clamp(2.5rem, 14vw, 4rem)", fontWeight: 600, letterSpacing: "-0.06em", lineHeight: 1.1, marginBottom: 28 }}
+        >
+          Services.
+        </h2>
+
+        <div className="w-full flex flex-col gap-3">
+          {SERVICES.map((svc) => (
+            <div
+              key={svc.id}
+              onClick={() => router.push(`/services/${svc.slug}`)}
+              className="w-full cursor-pointer flex items-center gap-4"
+              style={{ backgroundColor: "rgb(20,20,20)", borderRadius: "16px", padding: "18px 18px" }}
+            >
+              <div className="flex-shrink-0 flex items-center justify-center" style={{ width: 48, height: 48 }}>
+                <svc.Icon />
+              </div>
+              <div className="flex flex-col gap-1 flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, fontWeight: 500 }}>{svc.id}</span>
+                  <span style={{ color: "white", fontSize: 17, fontWeight: 700, letterSpacing: "-0.02em" }}>{svc.title}</span>
+                </div>
+                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, lineHeight: 1.5 }}>{svc.summary}</span>
+              </div>
+              <span style={{ color: "rgb(99,102,241)", fontSize: 18, fontWeight: 700, flexShrink: 0 }}>→</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ─── Desktop: animated fan (hidden on mobile) ─── */}
+    {/* Reduced scroll travel (260 vh) so the section doesn't feel endless */}
+    <section ref={sectionRef} className="relative w-full hidden md:block" style={{ height: "260vh" }}>
 
       {/* Sticky viewport — overflow visible so cards aren't clipped */}
       <div className="sticky top-0 h-screen w-full" style={{ overflow: "visible" }}>
@@ -249,5 +289,6 @@ export default function ServicesSection() {
 
       </div>
     </section>
+    </>
   );
 }
