@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
@@ -71,19 +71,38 @@ const SERVICES = [
   { id: "06", title: "Branding",   slug: "brand-strategy",       Icon: IconBranding,  summary: "Visual identities that build trust and command premium positioning." },
 ] as const;
 
-/* ─── Card geometry — fits all viewports ≥ 1280px ──────────────────────── */
-const CW = 150; // card width
-const CH = 200; // card height
+/* ─── Fan geometry ─────────────────────────────────────────────────────────
+ * Desktop: cards fan out horizontally (left ↔ right).
+ * Mobile:  same scroll-driven fan, but vertically (top ↕ bottom).
+ */
+const D_X   = [-420, -252, -84, 84, 252, 420];   // desktop horizontal spread
+const D_Y   = [55,   17,   0,   0,  17,  55];
+const D_ROT = [-20,  -11,  -4,  4,  11,  20];
 
-// center-to-center spacing: 168px  (>CW so cards never overlap)
-const FAN_X   = [-420, -252, -84, 84, 252, 420] as const;
-const FAN_Y   = [55,   17,   0,   0,  17,  55]  as const;
-const FAN_ROT = [-20,  -11,  -4,  4,  11,  20]  as const;
-const STACK_R = [-5,   -3,   -1,  1,  3,   5]   as const;
+const M_X   = [-22,  14,   -9,  9,  -14, 22];     // mobile slight horizontal sway
+const M_Y   = [-225, -135, -45, 45, 135, 225];    // mobile vertical spread
+const M_ROT = [-7,   5,    -2,  2,  -5,  7];
+
+const STACK_R = [-5, -3, -1, 1, 3, 5];            // initial stacked rotation
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const FAN_X   = isMobile ? M_X : D_X;
+  const FAN_Y   = isMobile ? M_Y : D_Y;
+  const FAN_ROT = isMobile ? M_ROT : D_ROT;
+  const CW = isMobile ? 132 : 150;
+  const CH = isMobile ? 150 : 200;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -124,48 +143,8 @@ export default function ServicesSection() {
   ];
 
   return (
-    <>
-    {/* ─── Mobile: simple vertical stack (md:hidden) ─── */}
-    <section className="md:hidden relative w-full" style={{ padding: "24px 16px" }}>
-      <div
-        className="overflow-hidden flex flex-col items-center"
-        style={{ backgroundColor: "rgb(99,102,241)", borderRadius: "26px", padding: "40px 20px" }}
-      >
-        <h2
-          className="text-white text-center select-none"
-          style={{ fontSize: "clamp(2.5rem, 14vw, 4rem)", fontWeight: 600, letterSpacing: "-0.06em", lineHeight: 1.1, marginBottom: 28 }}
-        >
-          Services.
-        </h2>
-
-        <div className="w-full flex flex-col gap-3">
-          {SERVICES.map((svc) => (
-            <div
-              key={svc.id}
-              onClick={() => router.push(`/services/${svc.slug}`)}
-              className="w-full cursor-pointer flex items-center gap-4"
-              style={{ backgroundColor: "rgb(20,20,20)", borderRadius: "16px", padding: "18px 18px" }}
-            >
-              <div className="flex-shrink-0 flex items-center justify-center" style={{ width: 48, height: 48 }}>
-                <svc.Icon />
-              </div>
-              <div className="flex flex-col gap-1 flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, fontWeight: 500 }}>{svc.id}</span>
-                  <span style={{ color: "white", fontSize: 17, fontWeight: 700, letterSpacing: "-0.02em" }}>{svc.title}</span>
-                </div>
-                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, lineHeight: 1.5 }}>{svc.summary}</span>
-              </div>
-              <span style={{ color: "rgb(99,102,241)", fontSize: 18, fontWeight: 700, flexShrink: 0 }}>→</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* ─── Desktop: animated fan (hidden on mobile) ─── */}
-    {/* Reduced scroll travel (260 vh) so the section doesn't feel endless */}
-    <section ref={sectionRef} className="relative w-full hidden md:block" style={{ height: "260vh" }}>
+    /* Reduced scroll travel (260 vh) so the section doesn't feel endless */
+    <section ref={sectionRef} className="relative w-full" style={{ height: "260vh" }}>
 
       {/* Sticky viewport — overflow visible so cards aren't clipped */}
       <div className="sticky top-0 h-screen w-full" style={{ overflow: "visible" }}>
@@ -289,6 +268,5 @@ export default function ServicesSection() {
 
       </div>
     </section>
-    </>
   );
 }

@@ -59,8 +59,10 @@ function PhoneMockup({ url }: { url: string }) {
           <iframe
             src={url}
             title="Mobile preview"
+            scrolling="no"
             style={{
-              width: VIEWPORT,
+              // +18px viewport so the document's scrollbar sits past the clip edge
+              width: VIEWPORT + 18,
               height: Math.round(SITE_H / scale),
               transform: `scale(${scale})`,
               transformOrigin: "0 0",
@@ -152,8 +154,10 @@ function LaptopMockup({ url }: { url: string }) {
         <iframe
           src={url}
           title="Desktop preview"
+          scrolling="no"
           style={{
-            width: VIEWPORT,
+            // +18px viewport so the document's scrollbar sits past the clip edge
+            width: VIEWPORT + 18,
             height: Math.round(IF_H / scale),
             transform: `scale(${scale})`,
             transformOrigin: "0 0",
