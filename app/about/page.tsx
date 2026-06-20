@@ -123,12 +123,15 @@ export default function AboutPage() {
           </motion.div>
           <div style={{ overflow: "hidden" }}>
             <motion.h1
-              className="text-white"
-              style={{ fontSize: "clamp(2.8rem,6vw,5.5rem)", fontWeight: 600, letterSpacing: "-0.05em", lineHeight: 1.05 }}
+              style={{ fontSize: "clamp(3.5rem,7.5vw,6.9rem)", fontWeight: 800, letterSpacing: "-0.05em", lineHeight: 1.05 }}
               initial={{ y: "100%" }} animate={heroIn ? { y: 0 } : {}}
               transition={{ duration: 0.85, delay: 0.08, ease }}
             >
-              Your Dedicated<br />Backbone Team.
+              <span style={{ color: INDIGO }}>Your</span>{" "}
+              <span style={{ color: PURPLE }}>Dedicated</span>
+              <br />
+              <span style={{ color: TEAL }}>Backbone</span>{" "}
+              <span style={{ color: PINK }}>Team.</span>
             </motion.h1>
           </div>
           <motion.p

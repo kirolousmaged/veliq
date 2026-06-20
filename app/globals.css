@@ -167,7 +167,8 @@ body {
   transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 15px;
 }
-.service-card:hover .service-card-inner {
+.service-card:hover .service-card-inner,
+.service-card.is-flipped .service-card-inner {
   transform: rotateY(180deg);
 }
 .service-card-face {

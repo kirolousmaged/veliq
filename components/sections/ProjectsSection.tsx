@@ -6,10 +6,10 @@ import Link from "next/link";
 import Button from "@/components/ui/Button";
 import { PROJECTS } from "@/lib/projects";
 
-const CARD_W   = 620;
-const CARD_H   = Math.round(CARD_W * 9 / 16); // 349
+const CARD_W   = 760;
+const CARD_H   = Math.round(CARD_W * 9 / 16); // 428
 const CARD_GAP = 20;
-const ONE_SET  = PROJECTS.length * (CARD_W + CARD_GAP); // 7680
+const ONE_SET  = PROJECTS.length * (CARD_W + CARD_GAP);
 
 function BrowserCard({ project }: { project: (typeof PROJECTS)[number] }) {
   const domain = project.url.replace(/^https?:\/\/(www\.)?/, "");
@@ -74,7 +74,7 @@ export default function ProjectsSection() {
 
   return (
     <section ref={ref} className="w-full bg-black section-padding">
-      <div className="w-full flex flex-col gap-[120px]">
+      <div className="w-full flex flex-col gap-16 md:gap-[120px]">
 
         <motion.div
           className="flex justify-between items-end px-2"
@@ -86,33 +86,33 @@ export default function ProjectsSection() {
             <h2 className="heading-1 text-white">Projects.</h2>
             <span className="para-12 text-[rgb(201,201,201)] mt-4">(12)</span>
           </div>
-          <Button label="All Projects" href="/projects" variant="outline" />
+          {/* Desktop: button beside the title */}
+          <div className="hidden md:block">
+            <Button label="All Projects" href="/projects" variant="outline" />
+          </div>
         </motion.div>
 
         {/*
-          3-layer architecture:
-            Layer 1 — gradient-mask wrapper: fades cards at edges instead of hard-clipping.
-                       overflow:hidden prevents scrollbars; mask-image softens the edges.
+          4-layer architecture:
+            Layer 1 — full-bleed wrapper, overflow:hidden (no edge fade)
             Layer 2 — perspective context (separate from overflow so 3D isn't clipped)
             Layer 3 — static rotateY tilt (plain CSS, no Framer Motion)
             Layer 4 — CSS @keyframes translateX (compositor thread, never snaps)
         */}
 
-        {/* Layer 1 — full-bleed + gradient edge fade */}
+        {/* Layer 1 — full-bleed (no edge gradient) */}
         <div
           style={{
             width: "100vw",
             marginLeft: "calc(50% - 50vw)",
             overflow: "hidden",
-            maskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
           }}
         >
           {/* Layer 2 — perspective */}
           <div style={{ perspective: "1800px", perspectiveOrigin: "50% 50%" }}>
 
             {/* Layer 3 — static 3D tilt */}
-            <div style={{ transform: "rotateY(-18deg)", transformStyle: "preserve-3d" }}>
+            <div style={{ transform: "rotateY(-28deg)", transformStyle: "preserve-3d" }}>
 
               {/* Layer 4 — smooth CSS animation, translateX only */}
               <div
@@ -130,6 +130,11 @@ export default function ProjectsSection() {
 
             </div>
           </div>
+        </div>
+
+        {/* Mobile: button at the end */}
+        <div className="md:hidden flex justify-center">
+          <Button label="All Projects" href="/projects" variant="outline" />
         </div>
 
       </div>

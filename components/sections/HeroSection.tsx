@@ -4,6 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+const INDIGO = "rgb(99,102,241)";
+const PURPLE = "rgb(168,85,247)";
+const TEAL   = "rgb(45,212,191)";
+const PINK   = "rgb(236,72,153)";
+
 export default function HeroSection() {
   return (
     <section
@@ -37,13 +42,15 @@ export default function HeroSection() {
           style={{
             fontSize: "clamp(1rem, 1.8vw, 20px)",
             fontWeight: 400,
-            color: "rgba(255,255,255,0.6)",
             lineHeight: 1.65,
             maxWidth: "44ch",
             letterSpacing: "-0.01em",
           }}
         >
-          Your dedicated backbone team.
+          <span style={{ color: INDIGO }}>Your</span>{" "}
+          <span style={{ color: PURPLE }}>dedicated</span>{" "}
+          <span style={{ color: TEAL }}>backbone</span>{" "}
+          <span style={{ color: PINK }}>team.</span>
         </motion.p>
 
         {/* CTA */}

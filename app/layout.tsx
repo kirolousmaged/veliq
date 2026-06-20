@@ -31,7 +31,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="bg-black text-white min-h-full antialiased overflow-x-hidden">
+      <body className="relative bg-black text-white min-h-full antialiased overflow-x-hidden">
         <GlobalBackground />
         <CustomCursor />
         <Navbar />

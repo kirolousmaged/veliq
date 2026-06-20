@@ -79,30 +79,46 @@ const D_X   = [-420, -252, -84, 84, 252, 420];   // desktop horizontal spread
 const D_Y   = [55,   17,   0,   0,  17,  55];
 const D_ROT = [-20,  -11,  -4,  4,  11,  20];
 
-const M_X   = [-22,  14,   -9,  9,  -14, 22];     // mobile slight horizontal sway
-const M_Y   = [-225, -135, -45, 45, 135, 225];    // mobile vertical spread
-const M_ROT = [-7,   5,    -2,  2,  -5,  7];
-
 const STACK_R = [-5, -3, -1, 1, 3, 5];            // initial stacked rotation
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const [isMobile, setIsMobile] = useState(false);
+  // Track viewport so mobile card size & spread adapt to fit without overlap.
+  const [vp, setVp] = useState({ w: 1280, h: 800 });
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
+    const onResize = () => setVp({ w: window.innerWidth, h: window.innerHeight });
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const FAN_X   = isMobile ? M_X : D_X;
-  const FAN_Y   = isMobile ? M_Y : D_Y;
-  const FAN_ROT = isMobile ? M_ROT : D_ROT;
-  const CW = isMobile ? 132 : 150;
-  const CH = isMobile ? 150 : 200;
+  const isMobile = vp.w <= 767;
+
+  let CW: number, CH: number, FAN_X: number[], FAN_Y: number[], FAN_ROT: number[];
+  if (isMobile) {
+    // Size 6 cards so they stack vertically with a guaranteed gap (never overlap).
+    const GAP = 14;                              // min vertical gap between cards
+    const usableH = vp.h * 0.82;                 // leave room around the stack
+    CH = Math.max(96, Math.min(170, (usableH - 5 * GAP) / 6));
+    CW = Math.min(CH * 0.82, vp.w * 0.74);
+    const S = CH + GAP;                          // center-to-center ≥ CH ⇒ no overlap
+    FAN_Y = [-2.5, -1.5, -0.5, 0.5, 1.5, 2.5].map((m) => Math.round(m * S));
+    const sway = Math.max(0, Math.min(14, (vp.w * 0.8 - CW) / 2));
+    FAN_X = [-1, 0.6, -0.4, 0.4, -0.6, 1].map((m) => Math.round(m * sway));
+    FAN_ROT = [-4, 3, -2, 2, -3, 4];
+  } else {
+    CW = 150; CH = 200;
+    FAN_X = D_X; FAN_Y = D_Y; FAN_ROT = D_ROT;
+  }
+
+  // Two-tap interaction: 1st tap flips the card, 2nd tap opens the service page.
+  const [flippedId, setFlippedId] = useState<string | null>(null);
+  const handleCardClick = (id: string, slug: string) => {
+    if (flippedId === id) router.push(`/services/${slug}`);
+    else setFlippedId(id);
+  };
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -206,9 +222,9 @@ export default function ServicesSection() {
               >
                 {/* Perspective + flip trigger */}
                 <div
-                  className="service-card w-full h-full cursor-pointer"
+                  className={`service-card w-full h-full cursor-pointer${flippedId === svc.id ? " is-flipped" : ""}`}
                   style={{ perspective: "800px" }}
-                  onClick={() => router.push(`/services/${svc.slug}`)}
+                  onClick={() => handleCardClick(svc.id, svc.slug)}
                 >
                   <div className="service-card-inner">
 

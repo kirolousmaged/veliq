@@ -113,8 +113,8 @@ export default function IntroSection() {
         {/* ── Equation — 3 lines ───────────────────────────────────── */}
         <div className="flex flex-col items-center text-center" style={{ gap: "clamp(2px,0.4vw,6px)" }}>
 
-          {/* Line 1: Speed × Accuracy × Professionalism */}
-          <div className="flex items-baseline justify-center flex-wrap" style={{ gap: "clamp(6px,0.9vw,14px)" }}>
+          {/* Line 1: Speed × Accuracy × Professionalism — one per line on mobile */}
+          <div className="flex flex-col items-center md:flex-row md:items-baseline justify-center md:flex-wrap" style={{ gap: "clamp(6px,0.9vw,14px)" }}>
             <Word text="Speed"
               color="rgb(99,102,241)"
               glowColor="rgba(99,102,241,0.4)"
@@ -232,18 +232,18 @@ export default function IntroSection() {
           </div>
         </div>
 
-        {/* ── Logos ────────────────────────────────────────────────── */}
-        <div className="w-full flex items-center gap-2">
+        {/* ── Logos — 2 columns on mobile, single row on desktop ───────── */}
+        <div className="w-full grid grid-cols-2 gap-2 md:flex md:items-center">
           {CLIENT_LOGOS.map((logo, i) => (
             <motion.div
               key={logo.name}
-              className="flex-1 flex items-center justify-center rounded-[18px]"
-              style={{ height: "76px", backgroundColor: "rgb(14,14,14)", border: "1px solid rgb(22,22,22)", padding: "14px" }}
+              className="md:flex-1 flex items-center justify-center rounded-[18px] h-[104px] md:h-[76px]"
+              style={{ backgroundColor: "rgb(14,14,14)", border: "1px solid rgb(22,22,22)", padding: "16px" }}
               initial={{ opacity: 0, y: 14 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, delay: 1.55 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Image src={logo.src} alt={logo.name} width={90} height={32} className="object-contain" style={{ maxHeight: "28px", width: "auto" }} />
+              <Image src={logo.src} alt={logo.name} width={120} height={44} className="object-contain w-auto max-h-[44px] md:max-h-[28px]" />
             </motion.div>
           ))}
         </div>

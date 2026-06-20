@@ -34,7 +34,10 @@ export default function BlogSection() {
           >
             Latest Blogs.
           </motion.h2>
-          <Button label="All Blogs" href="/blog" variant="outline" />
+          {/* Desktop: button beside the title */}
+          <div className="hidden md:block">
+            <Button label="All Blogs" href="/blog" variant="outline" />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-[10px]">
@@ -77,6 +80,11 @@ export default function BlogSection() {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Mobile: button at the end */}
+        <div className="md:hidden flex justify-center">
+          <Button label="All Blogs" href="/blog" variant="outline" />
         </div>
 
       </div>
