@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects", count: "12" },
   { label: "Blog",     href: "/blog"     },
-  { label: "Pricing",  href: "/pricing"  },
 ];
 
 function DotsIcon() {

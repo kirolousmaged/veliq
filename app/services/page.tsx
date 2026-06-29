@@ -10,41 +10,24 @@ const ICONS: Record<string, React.ReactNode> = {
       <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
     </svg>
   ),
-  "mobile-development": (
+  "website-support": (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="5" y="2" width="14" height="20" rx="2" />
-      <path d="M12 18h.01" />
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <path d="M9 12l2 2 4-4" />
     </svg>
   ),
-  "seo-setup": (
+  "seo": (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.35-4.35" />
       <path d="M11 8v6M8 11h6" />
     </svg>
   ),
-  "digital-marketing": (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-    </svg>
-  ),
-  "data-analytics": (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 20V10" />
-      <path d="M12 20V4" />
-      <path d="M6 20v-6" />
-    </svg>
-  ),
-  "brand-strategy": (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
-    </svg>
-  ),
 };
 
 export const metadata = {
   title: "Services — VELIQ",
-  description: "Web development, mobile apps, SEO, digital marketing, data analytics, and brand strategy — all under one dedicated team.",
+  description: "Website development, website support, and SEO — all under one dedicated team.",
 };
 
 export default function ServicesPage() {
@@ -55,7 +38,7 @@ export default function ServicesPage() {
         <div className="flex flex-col gap-4">
           <h1 className="heading-1 text-white">Services.</h1>
           <p className="para-32 text-[rgb(201,201,201)] max-w-2xl">
-            Six disciplines. One team. Every channel aligned to one direction — your growth.
+            Three focused disciplines. One dedicated team. Every channel aligned to one direction — your growth.
           </p>
         </div>
 

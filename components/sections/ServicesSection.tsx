@@ -14,15 +14,6 @@ function IconWebDev() {
     </svg>
   );
 }
-function IconMobile() {
-  return (
-    <svg width="44" height="44" viewBox="0 0 56 56" fill="none">
-      <rect x="16" y="5" width="24" height="46" rx="5" stroke="white" strokeWidth="3.5"/>
-      <circle cx="28" cy="44" r="2" fill="white"/>
-      <line x1="22" y1="12" x2="34" y2="12" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-    </svg>
-  );
-}
 function IconSEO() {
   return (
     <svg width="44" height="44" viewBox="0 0 56 56" fill="none">
@@ -32,54 +23,31 @@ function IconSEO() {
     </svg>
   );
 }
-function IconMarketing() {
+function IconSupport() {
   return (
     <svg width="44" height="44" viewBox="0 0 56 56" fill="none">
-      <path d="M10 20L10 36L20 36L38 44L38 12L20 20L10 20Z" stroke="white" strokeWidth="3.5" strokeLinejoin="round"/>
-      <path d="M20 36L20 46L27 46" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M43 22L47 18" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-      <path d="M44 28L49 28" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-      <path d="M43 34L47 38" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-    </svg>
-  );
-}
-function IconAnalytics() {
-  return (
-    <svg width="44" height="44" viewBox="0 0 56 56" fill="none">
-      <rect x="8"  y="32" width="9"  height="16" rx="2" fill="white"/>
-      <rect x="24" y="22" width="9"  height="26" rx="2" fill="white"/>
-      <rect x="40" y="12" width="9"  height="36" rx="2" fill="white"/>
-      <path d="M10 20L24 13L40 8" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-}
-function IconBranding() {
-  return (
-    <svg width="44" height="44" viewBox="0 0 56 56" fill="none">
-      <path d="M28 6L34 20H50L37 29L42 44L28 35L14 44L19 29L6 20H22L28 6Z" stroke="white" strokeWidth="3.5" strokeLinejoin="round"/>
+      <path d="M28 6L12 13v16c0 11 7.5 21.2 16 23.5C44.5 50.2 52 40 52 29V13L28 6z" stroke="white" strokeWidth="3.5" strokeLinejoin="round"/>
+      <path d="M20 29l6 6 12-12" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 
 /* ─── Data ───────────────────────────────────────────────────────────────── */
 const SERVICES = [
-  { id: "01", title: "Web Dev",    slug: "website-development",  Icon: IconWebDev,    summary: "Fast, beautiful websites and web apps built to convert and scale." },
-  { id: "02", title: "Mobile",     slug: "mobile-development",   Icon: IconMobile,    summary: "Native iOS & Android apps your users will love — from MVP to launch." },
-  { id: "03", title: "SEO",        slug: "seo-setup",            Icon: IconSEO,       summary: "Rank higher and drive qualified traffic with technical SEO & content." },
-  { id: "04", title: "Marketing",  slug: "digital-marketing",    Icon: IconMarketing, summary: "Paid social, search, and email campaigns that grow your revenue." },
-  { id: "05", title: "Analytics",  slug: "data-analytics",       Icon: IconAnalytics, summary: "Dashboards, tracking, and A/B testing that turn data into decisions." },
-  { id: "06", title: "Branding",   slug: "brand-strategy",       Icon: IconBranding,  summary: "Visual identities that build trust and command premium positioning." },
+  { id: "01", title: "Web Dev",     slug: "website-development", Icon: IconWebDev,   summary: "Fast, beautiful websites and web apps built to convert and scale." },
+  { id: "02", title: "Web Support", slug: "website-support",     Icon: IconSupport,  summary: "Ongoing maintenance, updates, and security so your site never sleeps." },
+  { id: "03", title: "SEO",         slug: "seo",                 Icon: IconSEO,      summary: "Rank higher and drive qualified traffic with technical SEO & content." },
 ] as const;
 
 /* ─── Fan geometry ─────────────────────────────────────────────────────────
  * Desktop: cards fan out horizontally (left ↔ right).
  * Mobile:  same scroll-driven fan, but vertically (top ↕ bottom).
  */
-const D_X   = [-420, -252, -84, 84, 252, 420];   // desktop horizontal spread
-const D_Y   = [55,   17,   0,   0,  17,  55];
-const D_ROT = [-20,  -11,  -4,  4,  11,  20];
+const D_X   = [-320, 0, 320];   // desktop horizontal spread
+const D_Y   = [44,   0,  44];
+const D_ROT = [-18,  0,  18];
 
-const STACK_R = [-5, -3, -1, 1, 3, 5];            // initial stacked rotation
+const STACK_R = [-4, 0, 4];     // initial stacked rotation
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -98,16 +66,16 @@ export default function ServicesSection() {
 
   let CW: number, CH: number, FAN_X: number[], FAN_Y: number[], FAN_ROT: number[];
   if (isMobile) {
-    // Size 6 cards so they stack vertically with a guaranteed gap (never overlap).
-    const GAP = 14;                              // min vertical gap between cards
-    const usableH = vp.h * 0.82;                 // leave room around the stack
-    CH = Math.max(96, Math.min(170, (usableH - 5 * GAP) / 6));
+    // Size 3 cards so they stack vertically with a guaranteed gap (never overlap).
+    const GAP = 16;                              // min vertical gap between cards
+    const usableH = vp.h * 0.82;
+    CH = Math.max(110, Math.min(190, (usableH - 2 * GAP) / 3));
     CW = Math.min(CH * 0.82, vp.w * 0.74);
     const S = CH + GAP;                          // center-to-center ≥ CH ⇒ no overlap
-    FAN_Y = [-2.5, -1.5, -0.5, 0.5, 1.5, 2.5].map((m) => Math.round(m * S));
+    FAN_Y = [-1, 0, 1].map((m) => Math.round(m * S));
     const sway = Math.max(0, Math.min(14, (vp.w * 0.8 - CW) / 2));
-    FAN_X = [-1, 0.6, -0.4, 0.4, -0.6, 1].map((m) => Math.round(m * sway));
-    FAN_ROT = [-4, 3, -2, 2, -3, 4];
+    FAN_X = [-1, 0, 1].map((m) => Math.round(m * sway));
+    FAN_ROT = [-4, 0, 4];
   } else {
     CW = 150; CH = 200;
     FAN_X = D_X; FAN_Y = D_Y; FAN_ROT = D_ROT;
@@ -126,26 +94,17 @@ export default function ServicesSection() {
   });
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, restDelta: 0.001 });
 
-  const x0 = useTransform(progress, [0.05, 0.40], [0, FAN_X[0]]);
-  const x1 = useTransform(progress, [0.12, 0.47], [0, FAN_X[1]]);
-  const x2 = useTransform(progress, [0.19, 0.54], [0, FAN_X[2]]);
-  const x3 = useTransform(progress, [0.26, 0.61], [0, FAN_X[3]]);
-  const x4 = useTransform(progress, [0.33, 0.68], [0, FAN_X[4]]);
-  const x5 = useTransform(progress, [0.40, 0.75], [0, FAN_X[5]]);
+  const x0 = useTransform(progress, [0.05, 0.42], [0, FAN_X[0]]);
+  const x1 = useTransform(progress, [0.22, 0.58], [0, FAN_X[1]]);
+  const x2 = useTransform(progress, [0.38, 0.75], [0, FAN_X[2]]);
 
-  const y0 = useTransform(progress, [0.05, 0.40], [0, FAN_Y[0]]);
-  const y1 = useTransform(progress, [0.12, 0.47], [0, FAN_Y[1]]);
-  const y2 = useTransform(progress, [0.19, 0.54], [0, FAN_Y[2]]);
-  const y3 = useTransform(progress, [0.26, 0.61], [0, FAN_Y[3]]);
-  const y4 = useTransform(progress, [0.33, 0.68], [0, FAN_Y[4]]);
-  const y5 = useTransform(progress, [0.40, 0.75], [0, FAN_Y[5]]);
+  const y0 = useTransform(progress, [0.05, 0.42], [0, FAN_Y[0]]);
+  const y1 = useTransform(progress, [0.22, 0.58], [0, FAN_Y[1]]);
+  const y2 = useTransform(progress, [0.38, 0.75], [0, FAN_Y[2]]);
 
-  const r0 = useTransform(progress, [0.05, 0.40], [STACK_R[0], FAN_ROT[0]]);
-  const r1 = useTransform(progress, [0.12, 0.47], [STACK_R[1], FAN_ROT[1]]);
-  const r2 = useTransform(progress, [0.19, 0.54], [STACK_R[2], FAN_ROT[2]]);
-  const r3 = useTransform(progress, [0.26, 0.61], [STACK_R[3], FAN_ROT[3]]);
-  const r4 = useTransform(progress, [0.33, 0.68], [STACK_R[4], FAN_ROT[4]]);
-  const r5 = useTransform(progress, [0.40, 0.75], [STACK_R[5], FAN_ROT[5]]);
+  const r0 = useTransform(progress, [0.05, 0.42], [STACK_R[0], FAN_ROT[0]]);
+  const r1 = useTransform(progress, [0.22, 0.58], [STACK_R[1], FAN_ROT[1]]);
+  const r2 = useTransform(progress, [0.38, 0.75], [STACK_R[2], FAN_ROT[2]]);
 
   const textOpacity = useTransform(progress, [0, 0.3, 0.65], [0.5, 0.7, 1]);
 
@@ -153,9 +112,6 @@ export default function ServicesSection() {
     { x: x0, y: y0, r: r0 },
     { x: x1, y: y1, r: r1 },
     { x: x2, y: y2, r: r2 },
-    { x: x3, y: y3, r: r3 },
-    { x: x4, y: y4, r: r4 },
-    { x: x5, y: y5, r: r5 },
   ];
 
   return (

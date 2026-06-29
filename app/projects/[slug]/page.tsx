@@ -114,7 +114,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* ── Device mockups ── */}
         <div className="w-full max-w-[1200px]">
-          <DeviceMockups url={project.url} title={project.title} />
+          <DeviceMockups url={project.url} title={project.title} previewImage={project.noEmbed ? project.preview : undefined} />
         </div>
       </section>
 

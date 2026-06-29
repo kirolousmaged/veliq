@@ -7,6 +7,7 @@ export type Project = {
   description: string;
   preview: string;
   url: string;
+  noEmbed?: boolean;
   problemHeading: string;
   problemBody: string;
   solutionHeading: string;
@@ -28,7 +29,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "alfa-transport",
     title: "Alfa Transport",
-    category: "Web Design",
+    category: "Website Development",
     client: "Alfa Transport",
     year: "2025",
     url: "https://www.alfatransport.sa",
@@ -45,7 +46,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "yamin-estate",
     title: "Yamin Estate",
-    category: "Web Design",
+    category: "Website Development",
     client: "Yamin Estate",
     year: "2025",
     url: "https://www.yamin.estate",
@@ -62,7 +63,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "saudi-hayat",
     title: "Saudi Hayat",
-    category: "Web Design",
+    category: "Website Development",
     client: "Saudi Hayat",
     year: "2026",
     url: "https://www.saudihayat.com",
@@ -79,7 +80,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "fanous-clinic",
     title: "Fanous Clinic",
-    category: "Web Design",
+    category: "Website Development",
     client: "Fanous Clinic",
     year: "2025",
     url: "https://www.fanousclinic.com",
@@ -96,7 +97,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "initio",
     title: "Initio",
-    category: "Development",
+    category: "Website Development",
     client: "Initio",
     year: "2026",
     url: "https://www.initio.sa",
@@ -113,7 +114,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "redbone-gym",
     title: "RedBone Gym",
-    category: "Web Design",
+    category: "Website Development",
     client: "RedBone Gym",
     year: "2025",
     url: "https://www.redbonegym.com",
@@ -130,7 +131,8 @@ export const PROJECTS: Project[] = [
   {
     slug: "crewhub-studio",
     title: "CrewHub Studio",
-    category: "Brand Strategy",
+    category: "Website Development",
+    noEmbed: true,
     client: "CrewHub Studio",
     year: "2024",
     url: "https://crewhubstudio.com",
@@ -147,7 +149,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "captain-maged",
     title: "Captain Maged",
-    category: "Web Design",
+    category: "Website Development",
     client: "Capt. Maged",
     year: "2024",
     url: "https://captainmagedcm.com",
@@ -164,7 +166,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "coach-batool",
     title: "Coach Batool",
-    category: "Web Design",
+    category: "Website Development",
     client: "Coach Batool",
     year: "2025",
     url: "https://www.coachbatool.com",
@@ -181,7 +183,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "coach-shiko",
     title: "Coach Shiko",
-    category: "SEO Setup",
+    category: "Website Development",
     client: "Coach Shiko",
     year: "2026",
     url: "https://www.coachmohamedroshdy.com",
@@ -198,7 +200,8 @@ export const PROJECTS: Project[] = [
   {
     slug: "bedouin-trails",
     title: "Bedouin Trails",
-    category: "Web Design",
+    category: "SEO",
+    noEmbed: true,
     client: "Bedouin Trails",
     year: "2025",
     url: "https://bedouintrails.com",
@@ -215,7 +218,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "window-adv",
     title: "Window Adv",
-    category: "Brand Strategy",
+    category: "SEO",
     client: "Window Adv",
     year: "2024",
     url: "https://windowadv.com",
